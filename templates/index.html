@@ -6,26 +6,14 @@
 
 {% block content %}
 
-       <div class="ui center aligned basic segment">
-            <div class="ui search">
-              <div class="ui icon input">
-              <form class="form" autocomplete="off" spellcheck="false" method="POST">
-                <input type="text"  class="prompt" name = "prompt" size="50" style="height:40px" placeholder="Search project...">
-                    <i class="circular search link icon"> </i>
-              </form>
-              </div>
-              <div class="ui centered results"></div>
-            </div>
-           <div>{{projects}}</div>
-       </div>
-
-        <br/><br/><br/>
+        <h2 class="ui center aligned horizontal divider header"><i class="cogs teal icon"></i> Latest Projects in the Pipeline</h2>
+<br>
      <table class="ui selectable celled table">
       <thead>
         <tr>
-          <th>Job Id</th>
+          <th>Job ID</th>
           <th>Project Name</th>
-          <th>Doc Number</th>
+          <th>Number of Documents</th>
           <th>Project Status</th>
           <th>Created at</th>
         </tr>
@@ -35,9 +23,17 @@
       {% for info in details %}
         <tr>
           <td>{{info.job_id}}</td>
-          <td>{{info.proj_id}}</td>
+          <td><a href="{{url_for('index')}}project/{{info.proj_id}}">{{info.proj_id}}</a></td>
           <td>{{info.num_docs}}</td>
-          <td>{{info.proj_status}}</td>
+
+          {% if info.proj_status == 'Started' %}
+            <td class="warning"><i class="play small orange icon"></i> {{info.proj_status}}</td>
+          {% elif info.proj_status == 'Error' %}
+            <td class="negative"><i class="times red icon"></i>{{info.proj_status}}</td>
+          {% elif info.proj_status == 'Finished' %}
+            <td class="positive"><i class="check green icon"></i>{{info.proj_status}}</td>
+          {% endif %}
+
           <td>{{info.created_at}}</td>
         </tr>
       {% endfor %}
@@ -46,12 +42,4 @@
 
 
 
-{% endblock %}
-
-{% block scripts %}
-        <script type="text/javascript">
-            $( document ).ready(function() {
-
-            });
-        </script>
 {% endblock %}

@@ -5,34 +5,62 @@
 {% endblock %}
 
 {% block content %}
- <div>{{details}}</div>
-
-        <h3 class="ui center aligned header"> Project Details for {{details.proj_id}}</h3>
+        <h2 class="ui center aligned horizontal divider header"> Project Details for {{details.proj_id}}</h2>
         <br><br>
         <div class="ui three column stackable center aligned grid">
             <div class="column">
-                <i class="hourglass icon"></i> Created at: <div class="ui label" id="created_at"></div>
+                Project Status:
+                {% if details.proj_status=='Started' %}
+                <div class="ui yellow big label" style="color:#000000 !important;"><i class="right angle icon"></i>{{details.proj_status}}</div>
+                {% elif details.proj_status=='Finished' %}
+                <div class="ui green big label"><i class="check icon"></i>{{details.proj_status}}</div>
+                {% elif details.proj_status=='Error'%}
+                <div class="ui red big label"><i class="times icon"></i>{{details.proj_status}}</div>
+                {% else %}
+                <div class="ui label">{{details.proj_status}}</div>
+                {% endif %}
             </div>
             <div class="column">
-                Current Pipeline Stage: <div class="ui label" id="curr_stage"></div>
+                Total Number of Documents: <div class="ui big label">{{details.num_docs}}</div>
             </div>
             <div class="column">
-                Project Status: <div class="ui label" id="proj_status"></div>
+                Created at: <div class="ui big label">{{details.created_at}}</div>
             </div>
+
         </div>
         <br><br>
-        <table class="ui selectable inverted table">
+        <table class="ui selectable celled stackable table">
           <thead>
             <tr>
               <th>Pipeline Stage</th>
-              <th>Started at</th>
-              <th>Status</th>
               <th>Passed files</th>
               <th>Failed files</th>
+              <th>Started at</th>
               <th>Last Update</th>
+              <th>Status</th>
             </tr>
           </thead>
-          <tbody id="stages">
+          <tbody>
+            {% for info in details.pipe_details %}
+                <tr>
+                    <td> {{ info.stage_name }} </td>
+                    <td class="positive"> {{ info.num_docs_pass }} </td>
+                    <td class="negative"> {{info.num_docs_fail }} </td>
+                    <td> {{ info.started_at }}</td>
+                    <td> {{ info.updated_at }} </td>
+
+
+                    {% if info.status=='Started' %}
+                    <td class="warning" style="color:#000000 !important;"><i class="play small  icon"></i> {{info.status}}</td>
+                    {% elif info.status=='Finished' %}
+                    <td class="positive"><i class="check icon"></i>{{info.status}}</td>
+                    {% elif info.status=='Failed'%}
+                    <td class="negative"><i class="times icon"></i>{{info.status}}</td>
+                    {% elif info.status=='Running'%}
+                    <td class="">{{info.status}}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
           </tbody>
         </table>
 

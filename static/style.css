@@ -30,3 +30,17 @@
     width: 100%;
     background-color: green;
 }
+
+input.prompt{
+    height:40px;
+    font-size:15px;
+}
+
+#results{
+position: fixed !important;
+top: 320px !important;
+left: 50% !important;
+transform: translate(-50%, -50%);
+width: 21% !important;
+font-size: 12px;
+}
