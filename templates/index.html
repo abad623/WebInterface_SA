@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="ui horizontal divider header">Monitoring Sourcing Assistant's Projects</h1>
+{% endblock %}
+
+{% block content %}
+
+       <div class="ui center aligned basic segment">
+            <div class="ui search">
+              <div class="ui icon input">
+              <form class="form" autocomplete="off" spellcheck="false" method="POST">
+                <input type="text"  class="prompt" name = "prompt" size="50" style="height:40px" placeholder="Search project...">
+                    <i class="circular search link icon"> </i>
+              </form>
+              </div>
+              <div class="ui centered results"></div>
+            </div>
+           <div>{{projects}}</div>
+       </div>
+
+        <br/><br/><br/>
+     <table class="ui selectable celled table">
+      <thead>
+        <tr>
+          <th>Job Id</th>
+          <th>Project Name</th>
+          <th>Doc Number</th>
+          <th>Project Status</th>
+          <th>Created at</th>
+        </tr>
+      </thead>
+
+      <tbody>
+      {% for info in details %}
+        <tr>
+          <td>{{info.job_id}}</td>
+          <td>{{info.proj_id}}</td>
+          <td>{{info.num_docs}}</td>
+          <td>{{info.proj_status}}</td>
+          <td>{{info.created_at}}</td>
+        </tr>
+      {% endfor %}
+        </tbody>
+    </table>
+
+
+
+{% endblock %}
+
+{% block scripts %}
+        <script type="text/javascript">
+            $( document ).ready(function() {
+
+            });
+        </script>
+{% endblock %}

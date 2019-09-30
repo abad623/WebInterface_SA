@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="ui horizontal divider header">Monitoring Sourcing Assistant's Projects</h1>
+{% endblock %}
+
+{% block content %}
+ <div>{{details}}</div>
+
+        <h3 class="ui center aligned header"> Project Details for {{details.proj_id}}</h3>
+        <br><br>
+        <div class="ui three column stackable center aligned grid">
+            <div class="column">
+                <i class="hourglass icon"></i> Created at: <div class="ui label" id="created_at"></div>
+            </div>
+            <div class="column">
+                Current Pipeline Stage: <div class="ui label" id="curr_stage"></div>
+            </div>
+            <div class="column">
+                Project Status: <div class="ui label" id="proj_status"></div>
+            </div>
+        </div>
+        <br><br>
+        <table class="ui selectable inverted table">
+          <thead>
+            <tr>
+              <th>Pipeline Stage</th>
+              <th>Started at</th>
+              <th>Status</th>
+              <th>Passed files</th>
+              <th>Failed files</th>
+              <th>Last Update</th>
+            </tr>
+          </thead>
+          <tbody id="stages">
+          </tbody>
+        </table>
+
+
+{% endblock %}
+
+{% block scripts %}
+        <script type="text/javascript">
+            $( document ).ready(function() {
+                $.getJSON('{{details}}', function(content){
+                      document.getElementById("created_at").innerHTML = content.created_at;
+                      document.getElementById("proj_status").innerHTML = content.proj_status;
+                      document.getElementById("curr_stage").innerHTML = content.curr_stage;
+                      content.pipe_details.forEach(function (item, index) {
+                          var node = document.createElement("tr");
+                          var node_child = document.createElement("td");
+                          var text_node = document.createTextNode(item.stage_name);
+                          node_child.appendChild(text_node);
+                          node.appendChild(node_child);
+                          var node_child = document.createElement("td");
+                          var text_node = document.createTextNode(item.started_at);
+                          node_child.appendChild(text_node);
+                          node.appendChild(node_child);
+                          var node_child = document.createElement("td");
+                          var text_node = document.createTextNode(item.status);
+                          node_child.appendChild(text_node);
+                          node.appendChild(node_child);
+                          var node_child = document.createElement("td");
+                          var text_node = document.createTextNode(item.num_docs_pass);
+                          node_child.appendChild(text_node);
+                          node.appendChild(node_child);
+                          var node_child = document.createElement("td");
+                          var text_node = document.createTextNode(item.num_docs_fail);
+                          node_child.appendChild(text_node);
+                          node.appendChild(node_child);
+                          var node_child = document.createElement("td");
+                          var text_node = document.createTextNode(item.updated_at);
+                          node_child.appendChild(text_node);
+                          node.appendChild(node_child);
+                          document.getElementById("stages").appendChild(node);
+                          console.log(node);
+                      });
+                });
+            });
+
+        </script>
+{% endblock %}
+

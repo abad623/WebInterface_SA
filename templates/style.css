@@ -1,0 +1,32 @@
+
+@media (min-height: 320px) {
+  .ui.footer.form-page { /* Increased specificity for SO snippet priority */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+
+   .ui.container {
+    width: 1500 px;
+ }
+
+ .ui.grid.container {
+    width: calc( 1500px  +  2rem ) !important;
+ }
+
+ .ui.relaxed.grid.container {
+    width: calc( 723px  +  3rem ) !important;
+ }
+
+ .ui.very.relaxed.grid.container {
+    width: calc( 723px  +  5rem ) !important;
+ }
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: green;
+}

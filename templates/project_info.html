@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="ui horizontal divider header">Monitoring Sourcing Assistant's Projects</h1>
+{% endblock %}
+
+    {% block content %}
+        <br/><br/><br/>
+        <div class="flight-container" style="overflow: auto; max-height: 80vh">
+            <div class="table-responsive">
+                <table class="table" id="flights">
+                    <thead>
+                        <tr>
+                            <th scope="col">started_at</th>
+                            <th scope="col">num_docs_fail</th>
+                            <th scope="col">updated_at</th>
+                            <th scope="col">num_docs_pass</th>
+                            <th scope="col">stage_name</th>
+                            <th scope="col">status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for info in details.pipe_details %}
+                        <tr id="xx">
+                            <th scope="row">{{ info.started_at }}</th>
+                            <td> {{info.num_docs_fail }} </td>
+                            <td> {{ info.updated_at }} </td>
+                            <td> {{ info.num_docs_pass }} </td>
+                            <td> {{ info.stage_name }} </td>
+                            <td> {{ info.status }} </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    {% endblock %}
+

@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="ui horizontal divider header">Monitoring Sourcing Assistant's Projects</h1>
+{% endblock %}
+
+{% block content %}
+
+       <div class="ui center aligned basic segment">
+            <div class="ui search">
+              <div class="ui icon input">
+              <form class="form" autocomplete="off" spellcheck="false" method="POST">
+                 <input type="text"  class="prompt" name = "prompt" size="50" style="height:40px" placeholder="Search project...">
+                    <i class="circular search link icon"> </i>
+              </form>
+
+              </div>
+              <div class="ui centered results"></div>
+            </div>
+            <div class="alert alert-warning">
+                <strong>Warning!</strong> IThe search box is empty !.
+            </div>
+       </div>
+{% endblock %}
+
+{% block scripts %}
+        <script type="text/javascript">
+            $( document ).ready(function() {
+
+
+            });
+        </script>
+{% endblock %}
