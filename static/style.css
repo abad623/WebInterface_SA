@@ -11,4 +11,9 @@ input.prompt{
 
 #results{
     margin-left: 27%;
+    font-size:15px;
+}
+
+.ui.search > .results .result .title{
+    font-weight:lighter !important;
 }
