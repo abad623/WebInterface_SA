@@ -1,17 +1,19 @@
 <html>
 <head>
     <title>Monitoring tool for Sourcing Assistance Projects - Architrave</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='semantic.min.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script src="{{ url_for('static', filename='moment.min.js') }}"></script>
+    <link rel="icon" href="https://www.architrave.de/res/uploads/2019/01/favicon.png" type="image/png">
 
 </head>
 <body>
 
 
-<div class="ui stackable grid">
+<div class="ui stackable grid" style="min-height:100% !important;">
   <div class="ui container" >
       <a href="{{url_for('index')}}" class="ui center aligned basic segment">
           <img class="ui centered image" src="{{ url_for('static', filename='images/logo.png') }}" width="600px" alt="">
@@ -27,7 +29,7 @@
       <div class="ui center aligned basic segment">
             <div class="ui search">
               <div class="ui icon input">
-                <input type="text"  class="prompt" name="prompt" size="50" placeholder="Search a project...">
+                <input type="text" class="prompt" name="prompt" size="50" placeholder="Search a project...">
                 <i class="search large icon"></i>
               </div>
               <div class="results" id="results"></div>
@@ -37,14 +39,14 @@
       {% endblock %}
       </div>
 </div>
-<footer class="footer" style="padding-left:1%;height:2%;position: absolute;bottom: 0;left: 0;width: 100%;background-color: #003399;vertical-align: middle;color:#ffffff;font-size: 14px;"> © Copyright Data Science Team 2019
-    </footer>
+<footer class="ui footer center aligned secondary basic segment"> © Copyright Data Science Team 2019
+</footer>
 
 <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
   crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="{{ url_for('static', filename='semantic.min.js') }}"></script>
 
 {% block scripts %}
 {% endblock %}

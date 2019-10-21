@@ -26,15 +26,22 @@
           <td><a href="{{url_for('index')}}project/{{info.proj_id}}">{{info.proj_id}}</a></td>
           <td>{{info.num_docs}}</td>
 
-          {% if info.proj_status == 'Started' %}
+          {% if info.proj_status == 'Started' or info.proj_status == 'Running'%}
             <td class="warning"><i class="play small orange icon"></i> {{info.proj_status}}</td>
           {% elif info.proj_status == 'Error' %}
             <td class="negative"><i class="times red icon"></i>{{info.proj_status}}</td>
           {% elif info.proj_status == 'Finished' %}
             <td class="positive"><i class="check green icon"></i>{{info.proj_status}}</td>
+          {% else %}
+            <td>{{info.proj_status}}</td>
           {% endif %}
 
-          <td>{{info.created_at}}</td>
+          <td>
+            <div data-tooltip="{{info.created_at}}">
+                <span id="proj_created_at_{{info.job_id}}"></span>
+            </div>
+
+          </td>
         </tr>
       {% endfor %}
         </tbody>
@@ -43,3 +50,16 @@
 
 
 {% endblock %}
+
+
+{% block scripts %}
+        <script type="text/javascript">
+            $( document ).ready(function() {
+            {% for info in details %}
+                var proj_created_at = moment('{{info.created_at}}').fromNow();
+                document.getElementById("proj_created_at_{{info.job_id}}").innerHTML = proj_created_at;
+            {% endfor %}
+            });
+        </script>
+{% endblock %}
+

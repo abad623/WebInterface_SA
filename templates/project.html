@@ -10,21 +10,21 @@
         <div class="ui three column stackable center aligned grid">
             <div class="column">
                 Project Status:
-                {% if details.proj_status=='Started' %}
+                {% if details.proj_status=='Started' or details.proj_status=='Running' %}
                 <div class="ui yellow big label" style="color:#000000 !important;"><i class="right angle icon"></i>{{details.proj_status}}</div>
                 {% elif details.proj_status=='Finished' %}
                 <div class="ui green big label"><i class="check icon"></i>{{details.proj_status}}</div>
                 {% elif details.proj_status=='Error'%}
                 <div class="ui red big label"><i class="times icon"></i>{{details.proj_status}}</div>
                 {% else %}
-                <div class="ui label">{{details.proj_status}}</div>
+                <div class="ui big label">{{details.proj_status}}</div>
                 {% endif %}
             </div>
             <div class="column">
                 Total Number of Documents: <div class="ui big label">{{details.num_docs}}</div>
             </div>
             <div class="column">
-                Created at: <div class="ui big label">{{details.created_at}}</div>
+                Created at: <div id="proj_created_at" class="ui big label"></div>
             </div>
 
         </div>
@@ -46,18 +46,17 @@
                     <td> {{ info.stage_name }} </td>
                     <td class="positive"> {{ info.num_docs_pass }} </td>
                     <td class="negative"> {{info.num_docs_fail }} </td>
-                    <td> {{ info.started_at }}</td>
-                    <td> {{ info.updated_at }} </td>
+                    <td id="start_date_{{loop.index}}" data-tooltip="{{info.started_at}}"> </td>
+                    <td id="update_date_{{loop.index}}" data-tooltip="{{info.updated_at}}"> </td>
 
-
-                    {% if info.status=='Started' %}
+                    {% if info.status=='Started' or info.status=='Running' %}
                     <td class="warning" style="color:#000000 !important;"><i class="play small  icon"></i> {{info.status}}</td>
                     {% elif info.status=='Finished' %}
                     <td class="positive"><i class="check icon"></i>{{info.status}}</td>
-                    {% elif info.status=='Failed'%}
+                    {% elif info.status=='Failed' or info.status=='Error' %}
                     <td class="negative"><i class="times icon"></i>{{info.status}}</td>
-                    {% elif info.status=='Running'%}
-                    <td class="">{{info.status}}</td>
+                    {% else %}
+                    <td>{{info.status}}</td>
                     {% endif %}
                 </tr>
             {% endfor %}
@@ -70,40 +69,14 @@
 {% block scripts %}
         <script type="text/javascript">
             $( document ).ready(function() {
-                $.getJSON('{{details}}', function(content){
-                      document.getElementById("created_at").innerHTML = content.created_at;
-                      document.getElementById("proj_status").innerHTML = content.proj_status;
-                      document.getElementById("curr_stage").innerHTML = content.curr_stage;
-                      content.pipe_details.forEach(function (item, index) {
-                          var node = document.createElement("tr");
-                          var node_child = document.createElement("td");
-                          var text_node = document.createTextNode(item.stage_name);
-                          node_child.appendChild(text_node);
-                          node.appendChild(node_child);
-                          var node_child = document.createElement("td");
-                          var text_node = document.createTextNode(item.started_at);
-                          node_child.appendChild(text_node);
-                          node.appendChild(node_child);
-                          var node_child = document.createElement("td");
-                          var text_node = document.createTextNode(item.status);
-                          node_child.appendChild(text_node);
-                          node.appendChild(node_child);
-                          var node_child = document.createElement("td");
-                          var text_node = document.createTextNode(item.num_docs_pass);
-                          node_child.appendChild(text_node);
-                          node.appendChild(node_child);
-                          var node_child = document.createElement("td");
-                          var text_node = document.createTextNode(item.num_docs_fail);
-                          node_child.appendChild(text_node);
-                          node.appendChild(node_child);
-                          var node_child = document.createElement("td");
-                          var text_node = document.createTextNode(item.updated_at);
-                          node_child.appendChild(text_node);
-                          node.appendChild(node_child);
-                          document.getElementById("stages").appendChild(node);
-                          console.log(node);
-                      });
-                });
+                var proj_created_at = moment('{{details.created_at}}').fromNow();
+                document.getElementById("proj_created_at").innerHTML = proj_created_at;
+                {% for info in details.pipe_details %}
+                    var start_date = moment('{{info.started_at}}').fromNow();
+                    document.getElementById("start_date_{{loop.index}}").innerHTML = start_date;
+                    var update_date = moment('{{info.updated_at}}').fromNow();
+                    document.getElementById("update_date_{{loop.index}}").innerHTML = update_date;
+                {% endfor %}
             });
 
         </script>
