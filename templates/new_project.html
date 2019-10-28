@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1 class="ui horizontal divider header">Starting a new Sourcing Assistant's Project</h1>
+{% endblock %}
+
+{% block content %}
+
+<h2 class="ui center aligned horizontal divider header"><i class="upload teal icon"></i> Select the project's local folder</h2>
+<br><br>
+<div class="ui center aligned basic segment">
+    <form action="{{url_for('new_project')}}" method="POST" class="ui form" enctype=multipart/form-data>
+    <input type="file" name="file[]" multiple="">
+    <br><br><br>
+    <button class="ui centered center aligned blue big button" type="submit">Submit</button>
+</form>
+</div>
+<br>
+{% if data != 'not attached' %}
+<h3 class="ui center aligned header">Uploaded data</h3>
+<table class="ui selectable celled stackable table">
+          <thead>
+            <tr>
+              <th>Filename</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for record in data %}
+                <tr>
+                    <td> {{ record }} </td>
+                    {% if record=='invalid file' %}
+                    <td class="warning" style="color:#000000 !important;"><i class="stop small icon"></i> File not uploaded </td>
+                    {% else %}
+                    <td class="positive">File uploaded successfully</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+{% endif %}
+
+{% endblock %}
+
+
+{% block scripts %}
+        <script type="text/javascript">
+            $( document ).ready(function() {
+
+            });
+        </script>
+{% endblock %}
+

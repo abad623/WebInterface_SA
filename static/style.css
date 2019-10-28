@@ -17,3 +17,16 @@ input.prompt{
 .ui.search > .results .result .title{
     font-weight:lighter !important;
 }
+
+#menu{
+    position:fixed;
+    display:block;
+    top:50px;
+    right:0px;
+    z-index:100;
+    background-color:#000e1c;
+    padding: 10px 10px 15px 10px;
+    border-top-left-radius: 7px;
+    border-bottom-left-radius: 7px;
+}
+

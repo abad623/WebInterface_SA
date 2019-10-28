@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Monitoring tool for Sourcing Assistance Projects - Architrave</title>
+    <title>Sourcing Assistance Projects - Architrave</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='semantic.min.css') }}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
@@ -12,35 +12,49 @@
 </head>
 <body>
 
+<a onclick="menu_toogle()" id="menu">
+    <i class="bars inverted icon"></i>
+</a>
+<div class="ui sidebar inverted vertical menu">
+    <br><br>
+<a href="{{url_for('new_project')}}" class="item">
+  <i class="angle right icon"></i> New Project
+</a>
 
-<div class="ui stackable grid" style="min-height:100% !important;">
-  <div class="ui container" >
-      <a href="{{url_for('index')}}" class="ui center aligned basic segment">
-          <img class="ui centered image" src="{{ url_for('static', filename='images/logo.png') }}" width="600px" alt="">
-      </a>
+<a class="item">
+  <i class="angle right icon"></i> Monitor Project
+</a>
 
-      {% block header %}
-      {% endblock %}
-
-      {% for message in get_flashed_messages() %}
-        <div class="flash">{{ message }}</div>
-      {% endfor %}
-
-      <div class="ui center aligned basic segment">
-            <div class="ui search">
-              <div class="ui icon input">
-                <input type="text" class="prompt" name="prompt" size="50" placeholder="Search a project...">
-                <i class="search large icon"></i>
-              </div>
-              <div class="results" id="results"></div>
-            </div>
-       </div>
-      {% block content %}
-      {% endblock %}
-      </div>
 </div>
-<footer class="ui footer center aligned secondary basic segment"> © Copyright Data Science Team 2019
-</footer>
+<div class="pusher">
+    <div class="ui stackable grid">
+      <div class="ui container" >
+          <a href="{{url_for('index')}}" class="ui center aligned basic segment">
+              <img class="ui centered image" src="{{ url_for('static', filename='images/logo.png') }}" width="600px" alt="">
+          </a>
+
+          {% block header %}
+          {% endblock %}
+
+          {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+          {% endfor %}
+
+          <div class="ui center aligned basic segment">
+                <div class="ui search">
+                  <div class="ui icon input">
+                    <input type="text" class="prompt" name="prompt" size="50" placeholder="Search a project...">
+                    <i class="search large icon"></i>
+                  </div>
+                  <div class="results" id="results"></div>
+                </div>
+           </div>
+          {% block content %}
+          {% endblock %}
+          </div>
+    </div>
+
+</div>
 
 <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
@@ -66,6 +80,12 @@
                   })
               ;
             });
-        </script>
+            function menu_toogle(){
+                $('.ui.sidebar')
+                  .sidebar('toggle')
+                ;
+            }
+</script>
+
 </body>
 </html>
