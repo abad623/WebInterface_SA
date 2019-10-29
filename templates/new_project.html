@@ -5,48 +5,78 @@
 {% endblock %}
 
 {% block content %}
-
-<h2 class="ui center aligned horizontal divider header"><i class="upload teal icon"></i> Select the project's local folder</h2>
-<br><br>
-<div class="ui center aligned basic segment">
+<style>
+    p,div,input,label,button{
+        font-size:15px !important;
+    }
+</style>
+<h2 class="ui center aligned horizontal divider header"><i class="cogs teal icon"></i> Latest Projects in the Pipeline</h2>
+<br>
+<div class="ui basic segment">
+    {% if msg %}
+        <div class="ui error message">
+            {{msg}}
+        </div>
+    {% endif %}
     <form action="{{url_for('new_project')}}" method="POST" class="ui form" enctype=multipart/form-data>
-    <input type="file" name="file[]" multiple="">
-    <br><br><br>
-    <button class="ui centered center aligned blue big button" type="submit">Submit</button>
+    <div class="field">
+        <label>Project Details</label>
+        <div class="two fields">
+        <div class="field">
+        <input type="text" name="project_name" placeholder="Project Name (e.g. ECE-01)">
+        </div>
+        <div class="field">
+        <input type="text" name="customer_name" placeholder="Customer name (e.g. ECE)">
+        </div>
+        </div>
+    </div>
+<!--    <div class="field">-->
+<!--    <label>Files to upload</label>-->
+<!--    <div class="fields">-->
+<!--      <div class="twelve wide field">-->
+<!--        <input id="files_picker" type="file" name="file[]" webkitdirectory multiple>-->
+<!--      </div>-->
+<!--      <div class="four wide field">-->
+<!--        <button class="ui centered center aligned blue huge fluid button" type="submit">Submit</button>-->
+<!--      </div>-->
+<!--    </div></div>-->
+        <div class="field">
+            <button class="ui centered center aligned blue huge fluid button" type="submit">Trigger Job</button>
+        </div>
+
 </form>
 </div>
 <br>
-{% if data != 'not attached' %}
-<h3 class="ui center aligned header">Uploaded data</h3>
-<table class="ui selectable celled stackable table">
-          <thead>
-            <tr>
-              <th>Filename</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for record in data %}
-                <tr>
-                    <td> {{ record }} </td>
-                    {% if record=='invalid file' %}
-                    <td class="warning" style="color:#000000 !important;"><i class="stop small icon"></i> File not uploaded </td>
-                    {% else %}
-                    <td class="positive">File uploaded successfully</td>
-                    {% endif %}
-                </tr>
-            {% endfor %}
-          </tbody>
-        </table>
-{% endif %}
+<!--    <h2 class="ui header"><i class="folder open outline teal icon"></i>Summary of Selected Files</h2>-->
+<!--    <table class="ui selectable celled stackable table">-->
+<!--          <thead>-->
+<!--            <tr>-->
+<!--              <th>File Path</th>-->
+<!--            </tr>-->
+<!--          </thead>-->
+<!--          <tbody id="listing">-->
+<!--          </tbody>-->
+<!--    </table>-->
 
+<br><br><br><br><br>
 {% endblock %}
 
 
 {% block scripts %}
         <script type="text/javascript">
-            $( document ).ready(function() {
-
+            $(document).ready(function(){
+              document.getElementById("files_picker").addEventListener("change", function(event) {
+                  document.getElementById("results").style.display = "block";
+                  let output = document.getElementById("listing");
+                  let files = event.target.files;
+                  for (let i=0; i<files.length; i++) {
+                    let record = document.createElement("tr");
+                    let item = document.createElement("td");
+                    item.innerHTML = files[i].webkitRelativePath;
+                    record.appendChild(item);
+                    output.appendChild(record);
+                  };
+              }, false);
             });
         </script>
 {% endblock %}

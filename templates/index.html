@@ -5,7 +5,11 @@
 {% endblock %}
 
 {% block content %}
-
+    {% if msg %}
+        <div class="ui success message">
+           {{msg}}
+        </div>
+    {% endif %}
         <h2 class="ui center aligned horizontal divider header"><i class="cogs teal icon"></i> Latest Projects in the Pipeline</h2>
 <br>
      <table class="ui selectable celled table">

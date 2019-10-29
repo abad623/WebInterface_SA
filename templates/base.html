@@ -11,17 +11,24 @@
     <link rel="icon" href="https://www.architrave.de/res/uploads/2019/01/favicon.png" type="image/png">
 </head>
 <body>
-
+<style>
+    div.ui.sidebar.inverted.vertical.menu > .item{
+        font-size:14px !important;
+    }
+</style>
 <a onclick="menu_toogle()" id="menu">
     <i class="bars inverted icon"></i>
 </a>
 <div class="ui sidebar inverted vertical menu">
     <br><br>
+    <div class="header item">
+        <b>Main Menu</b>
+    </div>
 <a href="{{url_for('new_project')}}" class="item">
   <i class="angle right icon"></i> New Project
 </a>
 
-<a class="item">
+<a href="{{url_for('index')}}" class="item">
   <i class="angle right icon"></i> Monitor Project
 </a>
 
