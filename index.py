@@ -18,8 +18,8 @@ app.config['DYNAMO_TABLES'] = [
  ]
 app.config['AIRFLOW_SETTINGS'] = [
     {
-        "HOST": 'http://localhost:5050',
-        "DAG_ID": '1'
+        "HOST": 'http://localhost:8081',
+        "DAG_ID": 'sourcing_assistant_cleanup_default'
     }
 ]
 
@@ -91,8 +91,11 @@ def new_project():
             cust_name = request.form['customer_name']
         except Exception as err:
             print(err)
-        path = cust_name + '/' + proj_name + '/'
+        path = cust_name.strip() + '/' + proj_name.strip() + '/'
         objs = list(bucket.objects.filter(Prefix=path))
+        print(path)
+        print(objs)
+
         if len(objs) > 0 and objs[0].key == path:
             return render_template('new_project.html', msg="Project exists already for this customer")
         else:
