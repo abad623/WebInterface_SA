@@ -3,6 +3,7 @@ from flask import (Flask, render_template, request, url_for, redirect)
 from flask_dynamo import Dynamo
 import boto3
 import requests
+import os
 from werkzeug.exceptions import abort
 
 app = Flask(__name__)
@@ -19,7 +20,7 @@ app.config['DYNAMO_TABLES'] = [
 app.config['AIRFLOW_SETTINGS'] = [
     {
         "HOST": 'http://localhost:8081',
-        "DAG_ID": 'sourcing_assistant_cleanup_default'
+        "DAG_ID": 'sourcing_assistant_pipeline_default'
     }
 ]
 
@@ -93,11 +94,16 @@ def new_project():
             print(err)
         path = cust_name.strip() + '/' + proj_name.strip() + '/'
         objs = list(bucket.objects.filter(Prefix=path))
-        print(path)
+       # print(objs)
+        counter_flag = False
+        for obj in list(bucket.objects.filter(Prefix=path)):
+            if obj.key == os.path.join(path,'reports/'):
+                print(obj.key)
+                counter_flag = True
         print(objs)
 
-        if len(objs) > 0 and objs[0].key == path:
-            return render_template('new_project.html', msg="Project exists already for this customer")
+        if len(objs) > 0 and counter_flag :
+            return render_template('new_project.html', msg="Project already exist for this customer")
         else:
             airflow_url = app.config['AIRFLOW_SETTINGS'][0]['HOST'] \
                           + '/api/experimental/dags/' \
